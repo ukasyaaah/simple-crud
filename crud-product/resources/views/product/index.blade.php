@@ -2,12 +2,19 @@
 @section('title', 'Products Page')
 
 @section('content')
-
-    <div class="my-10 items-center flex flex-col gap-y-4">
-        <h2 class="font-bold text-3xl "> Daftar Product</h2>
+    <nav class="flex gap-4 absolute top-4 right-4">
         <a href="{{ route('create') }}">
             <button class="bg-amber-500 text-white p-2 rounded-lg hover:cursor-pointer">Tambah Data</button>
         </a>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button onclick=" alert('Yakin mau Logout?') " type="submit"
+                class="bg-red-500 text-white p-2 rounded-lg hover:cursor-pointer">Logout</button>
+        </form>
+    </nav>
+    <div class="mb-10 items-center flex flex-col gap-y-4">
+        <h2 class="font-bold text-3xl "> Daftar Product</h2>
+
     </div>
     <table class="w-full  rounded-lg overflow-hidden">
         <thead class=" bg-amber-500 text-white leading-normal">

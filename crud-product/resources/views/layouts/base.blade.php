@@ -11,7 +11,7 @@
 
 <body>
 
-    <body class="h-full flex flex-col mx-auto max-w-xl  justify-center items-center">
+    <body class="min-h-screen  flex flex-col mx-auto max-w-xl  justify-center items-center">
         @yield('content')
     </body>
 </body>
