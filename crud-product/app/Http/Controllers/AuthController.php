@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\StoreLoginRequest;
+use App\Http\Requests\Auth\StoreRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,12 +20,10 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function login(Request $request)
+    public function login(StoreLoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email|string',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->validated();
+
 
         if (!Auth::attempt($credentials)) {
             return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
@@ -32,15 +32,9 @@ class AuthController extends Controller
         return redirect()->route('index');
     }
 
-    public function register(Request $request)
+    public function register(StoreRegisterRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'string|required',
-            'email' => 'email|unique:users|string|required',
-            'password' => 'string|required|confirmed',
-        ]);
-
-        $user = User::create($validated);
+        $user = User::create($request->validated());
         Auth::login($user);
         return redirect()->route('index');
     }
