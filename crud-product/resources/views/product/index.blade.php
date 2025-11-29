@@ -38,7 +38,7 @@
                     <td class="py-3 px-6 text-left"> {{ $product->name }} </td>
                     <td class="py-3 px-6 text-left"> {{ $product->description }} </td>
                     <td class="py-3 px-6 text-left"> <img class="min-w-20 rounded-lg"
-                            src="{{ asset('storage/' . $product->image) }}" alt="image">
+                            src="{{ Storage::url($product->image) }}" alt="image">
                     </td>
                     <td class="py-3 px-6 text-left"> {{ $product->updated_at->format('M d, Y ') }} </td>
                     <td class="py-3 px-6  flex flex-col gap-2 text-center">

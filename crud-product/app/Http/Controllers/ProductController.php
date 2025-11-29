@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,18 +30,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'string|required',
-            'description' => 'required',
-            'image' => 'required|image|file|max:5000',
-
-        ]);
-
-        $validated['image'] = $request->file('image')->store('images');
-
+        $validated = $request->validated();
+        $validated['image'] = $request->file('image')->store('images', 'public');
         Product::create($validated);
+
         return redirect()->route('index')->with('success', 'Data berhasil di tambah');
     }
 
@@ -63,19 +59,15 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
 
         $product = Product::find($id);
-        $validated = $request->validate([
-            'name' => 'string|required',
-            'description' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,gif'
-        ]);
+        $validated = $request->validated();
 
         if ($request->file('image')) {
-            Storage::delete($product->image);
-            $validated['image'] = $request->file('image')->store('images');
+            Storage::disk('public')->delete($product->image);
+            $validated['image'] = $request->file('image')->store('images', 'public');
         }
 
         $product->update($validated);
@@ -88,7 +80,7 @@ class ProductController extends Controller
     public function destroy(int $id)
     {
         $product = Product::findOrFail($id);
-        Storage::delete($product->image);
+        Storage::disk('public')->delete($product->image);
         $product->delete();
         return redirect()->route('index');
     }
