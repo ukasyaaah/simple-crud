@@ -4,7 +4,7 @@ This repository contains simple projects that demonstrate the basic CRUD operati
 Each project is designed as a foundational example for learning how to manage data in web applications.
 
 ## Requirements
-Make sure that your local machine has PHP ^8.2, Composer, and the Laravel installer installed. In addition, you should install either Node and NPM
+For Laravel Framework, Make sure that your local machine has PHP ^8.2, Composer, and the Laravel installer installed. In addition, you should install either Node and NPM
 
 
 
